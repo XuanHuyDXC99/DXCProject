@@ -1,0 +1,3 @@
+INSERT INTO Roles(userrolename) VALUES (N'Nhân Viên')
+INSERT INTO Roles(userrolename) VALUES (N'ADMIN')
+INSERT INTO Users(username,userpassword,firstname, lastname,birthday,daytowork,addressuser,Peopleid,sex,phonenumber,rolecode) VALUES (N'admin1',N'123',N'Linh',N'Nguyen',N'1995-05-10',N'2019-05-10',N'Quan Binh - TPHCM',N'424242424',1,N'3343434322',1)

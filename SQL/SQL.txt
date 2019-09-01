@@ -1,0 +1,128 @@
+CREATE TABLE Users
+	(
+	  usercode int IDENTITY(1,1) NOT NULL,
+	  username NVARCHAR(50),
+      userpassword NVARCHAR(50),
+	  firstname NVARCHAR(50),
+      lastname NVARCHAR(50),
+	  birthday date,
+      daytowork date,
+	  addressuser NVARCHAR(50),
+      Peopleid NVARCHAR(50) UNIQUE,
+      sex bit,
+      phonenumber varchar(11)
+	)
+GO
+ALTER TABLE Users ADD PRIMARY KEY(usercode)
+CREATE TABLE Roles
+	(
+	  rolecode int IDENTITY(1,1) NOT NULL,
+	  userrolename NVARCHAR(50)       
+	)
+GO
+ALTER TABLE Roles ADD PRIMARY KEY(rolecode)
+GO
+CREATE TABLE Bill
+(
+	codebill int IDENTITY(1,1) NOT NULL,
+	dateOrdate date,
+	total money,
+	usercode int,
+	customercode int,
+	productcode int
+)
+GO
+ALTER TABLE Bill ADD PRIMARY KEY(codebill)
+GO
+CREATE TABLE Customer
+(
+customercode int IDENTITY(1,1) NOT NULL,
+customername NVARCHAR(50),
+birthday date,
+sex bit,
+addressct NVARCHAR(50),
+Email NVARCHAR(50) UNIQUE,
+phonenumber varchar(11)
+)
+GO
+ALTER TABLE Customer ADD PRIMARY KEY(customercode)
+GO
+CREATE TABLE BillDeTail
+(
+invoicedetailscode int IDENTITY(1,1) NOT NULL,
+quantity int,
+singlePrice money,
+salePercent int,
+codebill int,
+productcode int
+)
+GO
+ALTER TABLE BillDeTail ADD PRIMARY KEY(invoicedetailscode)
+GO
+CREATE TABLE Product
+(
+productcode int IDENTITY(1,1) NOT NULL,   		                
+productname NVARCHAR(50),
+productprice money,
+inventory int,
+categorycode int,
+brandscode int
+)
+GO
+ALTER TABLE Product ADD PRIMARY KEY(productcode)
+GO
+CREATE TABLE Category
+(
+categorycode int IDENTITY(1,1) NOT NULL,
+categoryname NVARCHAR(50)
+)
+GO
+ALTER TABLE Category ADD PRIMARY KEY(categorycode)
+GO
+CREATE TABLE Brands
+(
+brandscode int IDENTITY(1,1) NOT NULL,		
+brandscodename NVARCHAR(50)
+)
+GO
+ALTER TABLE Brands ADD PRIMARY KEY(brandscode)
+GO
+CREATE TABLE Sale
+(
+salecode int IDENTITY(1,1) NOT NULL,	
+event NVARCHAR(50),
+salepercent	int,
+productcode int
+)
+GO
+ALTER TABLE Sale ADD PRIMARY KEY(salecode)
+GO
+CREATE TABLE Image
+(
+imagecode int IDENTITY(1,1) NOT NULL,	
+imagename NVARCHAR(50),
+productcode int
+)
+GO
+					//Tao moi quan he 
+ALTER TABLE Image ADD PRIMARY KEY(imagecode)
+GO
+ALTER TABLE dbo.Users ADD CONSTRAINT FK_UR FOREIGN KEY(userrole) REFERENCES dbo.Usersrole(userrole)
+
+ALTER TABLE dbo.Bill ADD CONSTRAINT FK_B FOREIGN KEY(usercode) REFERENCES dbo.Users(usercode)
+ALTER TABLE dbo.BillDeTail ADD CONSTRAINT FK_BD FOREIGN KEY(codebill) REFERENCES dbo.Bill(codebill)
+
+ALTER TABLE dbo.BillDeTail ADD CONSTRAINT FK_BDP FOREIGN KEY(productcode) REFERENCES dbo.Product(productcode)
+
+ALTER TABLE dbo.Product ADD CONSTRAINT FK_PC FOREIGN KEY(categorycode) REFERENCES dbo.Category(categorycode)
+
+ALTER TABLE dbo.Product ADD CONSTRAINT FK_PB FOREIGN KEY(brandscode) REFERENCES dbo.Brands(brandscode)
+
+ALTER TABLE dbo.Sale ADD CONSTRAINT FK_SP FOREIGN KEY(productcode) REFERENCES dbo.Product(productcode)
+
+ALTER TABLE dbo.Image ADD CONSTRAINT FK_IP FOREIGN KEY(productcode) REFERENCES dbo.Product(productcode)
+ALTER TABLE dbo.Bill ADD CONSTRAINT FK_BC FOREIGN KEY(customercode) REFERENCES dbo.Customer(customercode)
+
+
+
+
